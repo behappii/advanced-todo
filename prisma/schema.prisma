@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Todos {
+    id String @id @default(cuid())
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    todos Todo[]
+
+    @@map("todos")
+}
+
+model Todo {
+    id String @id @default(cuid())
+    text String
+
+    completed Boolean @default(false)
+    wholeDay Boolean // весь день или нет
+
+    timeFrom DateTime @default(now()) // со скольки
+    timeTo DateTime @default(now()) // до скольки (например мероприятие 14:00-16:00)
+
+    todosId String?
+    todos Todos? @relation(fields: [todosId], references: [id], onDelete: Cascade)
+
+    todoTags TodoTag[]
+    
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("todo")
+}
+
+model Tag {
+    id        String   @id @default(cuid())
+    text      String   @unique
+
+    todoTags TodoTag[]
+    
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("tag")
+}
+
+// связь many to many между tag и todo
+model TodoTag {
+    todoId String
+    tagId String
+
+    createdAt DateTime @default(now())
+
+    todo Todo @relation(fields: [todoId], references: [id], onDelete: Cascade)
+    tag Tag @relation(fields: [tagId], references: [id])
+
+    @@id([todoId, tagId])
+}
