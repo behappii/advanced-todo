@@ -106,10 +106,33 @@ const TodoList = () => {
         );
     }
 
-    const sortedData = [...data].sort(
-        (a, b) =>
-            new Date(a.timeFrom).getTime() - new Date(b.timeFrom).getTime(),
-    );
+    if (data.length === 0) {
+        return (
+            <div
+                className={`
+                flex flex-col items-center justify-center
+                min-h-100
+                gap-4
+                p-6
+            `}
+            >
+                <p
+                    className="text-2xl font-bold"
+                >
+                    No tasks found
+                </p>
+                <p
+                    className={`
+                    text-sm
+                    font-light
+                    opacity-50
+                `}
+                >
+                    Create your first task by clicking the button in the bottom right corner
+                </p>
+            </div>
+        );
+    }
 
     return (
         <ol
@@ -125,9 +148,9 @@ const TodoList = () => {
                 mx-auto
             `}
         >
-            {sortedData.map((todo: Todo) => (
+            {data.map((todo: Todo) => (
                 <li key={todo.id} className="flex justify-center">
-                    <TodoListItem todo={todo} />
+                    <TodoListItem todo={todo}/>
                 </li>
             ))}
         </ol>

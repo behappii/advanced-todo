@@ -11,7 +11,7 @@ export async function GET() {
             },
         },
         orderBy: {
-            createdAt: "desc",
+            timeFrom: "asc"
         },
     });
 
@@ -31,10 +31,10 @@ export async function POST(request: Request) {
             timeTo: timeTo ? new Date(timeTo) : undefined,
             todoTags: tagIds
                 ? {
-                      create: tagIds.map((tagId: string) => ({
-                          tagId,
-                      })),
-                  }
+                    create: tagIds.map((tagId: string) => ({
+                        tagId,
+                    })),
+                }
                 : undefined,
         },
         include: {

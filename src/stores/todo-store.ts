@@ -1,11 +1,12 @@
-import { create } from "zustand";
 import { Todo } from "@/types";
+import { create } from "zustand";
 
 interface TodoState {
     todos: Todo[];
     isLoading: boolean;
     error: Error | null;
-    expandedTodo: Todo | null;
+    expandedTodoModal: Todo | null;
+    expandedTodoEdit: Todo | null;
 
     // Actions
     setTodos: (todos: Todo[]) => void;
@@ -14,14 +15,16 @@ interface TodoState {
     addTodo: (todo: Todo) => void;
     updateTodo: (todo: Todo) => void;
     deleteTodo: (id: string) => void;
-    setExpandedTodo: (todo: Todo | null) => void;
+    setExpandedTodoModal: (todo: Todo | null) => void;
+    setExpandedTodoEdit: (todo: Todo | null) => void;
 }
 
 export const useTodoStore = create<TodoState>((set) => ({
     todos: [],
     isLoading: false,
     error: null,
-    expandedTodo: null,
+    expandedTodoModal: null,
+    expandedTodoEdit: null,
 
     setTodos: (todos) => set({ todos }),
     setLoading: (loading) => set({ isLoading: loading }),
@@ -35,5 +38,6 @@ export const useTodoStore = create<TodoState>((set) => ({
         set((state) => ({
             todos: state.todos.filter((t) => t.id !== id),
         })),
-    setExpandedTodo: (todo) => set({ expandedTodo: todo }),
+    setExpandedTodoModal: (todo) => set({ expandedTodoModal: todo }),
+    setExpandedTodoEdit: (todo) => set({ expandedTodoEdit: todo })
 }));

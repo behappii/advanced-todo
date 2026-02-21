@@ -9,6 +9,4 @@ export interface Todo {
     timeTo: string | Date;
     todosId?: string | null;
     todoTags?: TodoTag[];
-    createdAt: string | Date;
-    updatedAt: string | Date;
 }

@@ -30,7 +30,7 @@ export async function PATCH(
 ) {
     const { id } = await params;
     const body = await request.json();
-    const { text, completed, timeFrom, timeTo, tagIds } = body;
+    const { text, completed, wholeDay, timeFrom, timeTo, tagIds } = body;
 
     const existingTodo = await prisma.todo.findUnique({
         where: { id },
@@ -45,6 +45,7 @@ export async function PATCH(
         data: {
             text,
             completed,
+            wholeDay,
             timeFrom: timeFrom ? new Date(timeFrom) : undefined,
             timeTo: timeTo ? new Date(timeTo) : undefined,
             todoTags: tagIds

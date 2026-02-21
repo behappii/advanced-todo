@@ -1,9 +1,7 @@
-import TodoPage from "./pages/todos/page";
-
 export default function Home() {
     return (
         <>
-            <TodoPage />
+            <h1>Hello world</h1>
         </>
     );
 }
